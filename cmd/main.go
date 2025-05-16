@@ -19,7 +19,7 @@ func main() {
        port = "8080"
    }
 
-   database := db.InitDB(os.Getenv("DB_PATH"))
+   database := db.InitDB()
    r := mux.NewRouter()
 
    r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)

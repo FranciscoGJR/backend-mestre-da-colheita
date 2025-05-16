@@ -21,7 +21,7 @@ rm:
 	docker rm $(APP_CONTAINER)
 
 docker-run:
-	docker run -p 8080:8080 --env-file .env mestre-da-colheita
+	docker run -p 8080:8080 --network rede-go --env-file .env mestre-da-colheita
 
 help:
 	@echo "Comandos disponíveis:"
