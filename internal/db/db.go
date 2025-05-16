@@ -4,7 +4,7 @@ import (
    "gorm.io/driver/sqlite"
    "gorm.io/gorm"
    "log"
-   "github.com/seuusuario/plantio-smart/internal/models"
+   "github.com/FranciscoGJR/mestre-da-colheita/internal/models"
 )
 
 func InitDB(path string) *gorm.DB {

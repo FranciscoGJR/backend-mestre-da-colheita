@@ -1,8 +1,12 @@
 package handlers
 
 import (
-   "github.com/gorilla/mux"
+   "encoding/json"
+   "net/http"
    "gorm.io/gorm"
+   "github.com/FranciscoGJR/mestre-da-colheita/internal/models"
+   "strconv"
+   "github.com/gorilla/mux"
 )
 
 func RegisterRoutes(r *mux.Router, db *gorm.DB) {

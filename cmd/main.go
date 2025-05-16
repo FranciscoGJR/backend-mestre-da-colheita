@@ -8,7 +8,6 @@ import (
    "github.com/gorilla/mux"
    "github.com/joho/godotenv"
    "github.com/swaggo/http-swagger"
-   "github.com/FranciscoGJR/mestre-da-colheita/docs"
    "github.com/FranciscoGJR/mestre-da-colheita/internal/db"
    "github.com/FranciscoGJR/mestre-da-colheita/internal/handlers"
 )

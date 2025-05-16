@@ -4,7 +4,7 @@ import (
    "encoding/json"
    "net/http"
    "gorm.io/gorm"
-   "github.com/seuusuario/plantio-smart/internal/models"
+   "github.com/FranciscoGJR/mestre-da-colheita/internal/models"
 )
 
 func RegisterUser(db *gorm.DB) http.HandlerFunc {

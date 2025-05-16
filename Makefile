@@ -1,3 +1,7 @@
+APP_CONTAINER=mestre-da-colheita
+
+all: shell
+
 shell:
 	docker exec -it $(APP_CONTAINER) bash
 
