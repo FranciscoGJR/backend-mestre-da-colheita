@@ -1,11 +1,7 @@
 package handlers
 
 import (
-   "encoding/json"
-   "net/http"
    "gorm.io/gorm"
-   "github.com/FranciscoGJR/mestre-da-colheita/internal/models"
-   "strconv"
    "github.com/gorilla/mux"
 )
 
