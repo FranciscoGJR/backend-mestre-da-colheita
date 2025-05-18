@@ -1,31 +1,50 @@
 package main
 
 import (
-   "log"
-   "net/http"
-   "os"
+	"log"
+	"net/http"
+	"os"
 
-   "github.com/gorilla/mux"
-   "github.com/joho/godotenv"
-   "github.com/swaggo/http-swagger"
-   "github.com/FranciscoGJR/mestre-da-colheita/internal/db"
-   "github.com/FranciscoGJR/mestre-da-colheita/internal/handlers"
+	"github.com/FranciscoGJR/mestre-da-colheita/internal/db"
+	"github.com/FranciscoGJR/mestre-da-colheita/internal/handlers"
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+func enableCORS(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
-   godotenv.Load()
-   port := os.Getenv("PORT")
-   if port == "" {
-       port = "8080"
-   }
+	godotenv.Load()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-   database := db.InitDB()
-   r := mux.NewRouter()
+	database := db.InitDB()
+	db.SeedDatabase()
 
-   r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
+	r := mux.NewRouter()
 
-   handlers.RegisterRoutes(r, database)
+	r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
 
-   log.Printf("Servidor rodando na porta %s", port)
-   log.Fatal(http.ListenAndServe(":"+port, r))
+	handlers.RegisterRoutes(r, database)
+
+	// Adiciona o middleware de CORS
+	handlerWithCORS := enableCORS(r)
+
+	log.Printf("Servidor rodando na porta %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, handlerWithCORS))
+
 }
