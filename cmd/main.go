@@ -35,14 +35,20 @@ func main() {
 	database := db.InitDB()
 	db.SeedDatabase()
 
-	r := mux.NewRouter()
+	router := mux.NewRouter()
 
-	r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
+	router.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
 
-	handlers.RegisterRoutes(r, database)
+	handlers.RegisterRoutes(router, database)
+
+	router.HandleFunc("/api/v1/culturas", handlers.ListCulturas(database)).Methods("GET")
+	router.HandleFunc("/api/v1/culturas", handlers.CreateCultura(database)).Methods("POST")
+	router.HandleFunc("/api/v1/culturas/{id}", handlers.GetCulturaByID(database)).Methods("GET")
+	router.HandleFunc("/api/v1/culturas/{id}", handlers.UpdateCultura(database)).Methods("PUT")
+	router.HandleFunc("/api/v1/culturas/{id}", handlers.DeleteCultura(database)).Methods("DELETE")
 
 	// Adiciona o middleware de CORS
-	handlerWithCORS := enableCORS(r)
+	handlerWithCORS := enableCORS(router)
 
 	log.Printf("Servidor rodando na porta %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, handlerWithCORS))

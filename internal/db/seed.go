@@ -42,12 +42,12 @@ func SeedDatabase() {
 		{
 			Nome: "Tomate", TempoCrescimento: 10, PrecoNormal: 100,
 			PrecoPrata: 120, PrecoOuro: 150, PrecoIridio: 180,
-			Recorrente: true, ProdutividadeEsperada: 5, PrecoCustomizavel: false,
+			Recorrente: true, ProdutividadeEsperada: 5, Estacao: "Verão",
 		},
 		{
 			Nome: "Cenoura", TempoCrescimento: 7, PrecoNormal: 80,
 			PrecoPrata: 100, PrecoOuro: 130, PrecoIridio: 160,
-			Recorrente: false, ProdutividadeEsperada: 6, PrecoCustomizavel: false,
+			Recorrente: false, ProdutividadeEsperada: 6, Estacao: "Primavera",
 		},
 	}
 	for _, cultura := range culturas {
@@ -62,7 +62,6 @@ func SeedDatabase() {
 		CulturaID:          culturaTomate.ID,
 		QuantidadeSementes: 100,
 		DataPlantio:        time.Now().AddDate(0, 0, -10),
-		EstacaoPlantio:     "Primavera",
 		Localizacao:        "Lote A",
 		Status:             "Pronto para colher",
 		Observacoes:        "Irrigação automática",
